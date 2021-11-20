@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "pello"
+
+runner = Pello::Runner.new
+runner.add_pomodori_to_card
+
+
