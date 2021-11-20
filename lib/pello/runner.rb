@@ -3,7 +3,7 @@ require 'trello'
 
 module Pello
   class Runner
-    CONFIG_FILE_PATH = "#{ENV['HOME']}/.pello.yaml".freeze
+    CONFIG_FILE_PATH = "#{ENV['HOME']}/.config/pello/pello.yaml".freeze
     attr_accessor :user, :board_url, :list_name, :log_file
 
     def initialize

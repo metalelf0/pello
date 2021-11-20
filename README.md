@@ -1,28 +1,30 @@
 # Pello
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pello`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Pello is a command line utility to perform Trello related tasks directly from your console.
+Right now, it only allows adding pomodori to a Trello card. But stay tuned.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+First, run `gem install pello`.
 
-```ruby
-gem 'pello'
+Then, create the file `~/.config/pello/pello.yaml` with the following content:
+
+```
+auth:
+  developer_public_key: ""
+  member_token: ""
+config:
+  board_url: ""
+  username: ""
+  list_name: "In progress"
+  log_file: "/Users/your_name/.pello_log"
 ```
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install pello
+Visit trello, get dev key and member token, etc.
 
 ## Usage
 
-TODO: Write usage instructions here
+Run `pello` and follow the instructions.
 
 ## Development
 
