@@ -32,6 +32,8 @@ GEM
     minitest (5.14.4)
     netrc (0.11.0)
     oauth (0.5.8)
+    pastel (0.8.0)
+      tty-color (~> 0.5)
     public_suffix (4.0.6)
     rake (12.3.3)
     rest-client (2.1.0)
@@ -58,11 +60,22 @@ GEM
       json (>= 2.3.0)
       oauth (>= 0.4.5)
       rest-client (>= 1.8.0)
+    tty-color (0.6.0)
+    tty-cursor (0.7.1)
+    tty-prompt (0.23.1)
+      pastel (~> 0.8)
+      tty-reader (~> 0.8)
+    tty-reader (0.9.0)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.8)
+      wisper (~> 2.0)
+    tty-screen (0.8.1)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8)
+    wisper (2.0.1)
     zeitwerk (2.5.1)
 
 PLATFORMS
@@ -73,6 +86,7 @@ DEPENDENCIES
   rake (~> 12.0)
   rspec (~> 3.0)
   ruby-trello
+  tty-prompt
 
 BUNDLED WITH
    2.1.4

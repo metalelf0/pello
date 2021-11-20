@@ -1,21 +1,12 @@
+require "tty-prompt"
+
 module Pello
   class Inputs
     def self.choose_card(list)
+      prompt = TTY::Prompt.new
       card_names = list.cards.map(&:name)
-      options = %w[a s d f g h j k l q w e r t y u i o p]
-      menu = card_names.map { |card_name| [options[card_names.index(card_name)], card_name] }.to_h
-
-      menu.each do |key, value|
-        puts "#{key}) #{value}"
-      end
-
-      Choice.new(valid_options: options, message: '(choose card)').run(
-        ->(input) { return Pello::Card.new(list.cards.detect { |c| c.name == menu[input] }) },
-        lambda do
-          puts 'Invalid option, try again...'
-          return choose_card(list)
-        end
-      )
+      input = prompt.enum_select('Choose card', card_names, per_page: 10)
+      Pello::Card.new(list.cards.detect { |c| c.name == input })
     end
 
     def self.choose_list(user, board_url, list_name)

@@ -1,4 +1,3 @@
-require 'pello/choice'
 require 'pello/version'
 require 'pello/runner'
 require 'pello/inputs'
