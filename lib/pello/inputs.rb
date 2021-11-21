@@ -10,8 +10,12 @@ module Pello
     end
 
     def self.choose_list(user, board_url, list_name)
+      prompt = TTY::Prompt.new
       board = user.boards.detect { |b| b.url == board_url }
-      board.lists.detect { |l| l.name == list_name }
+      puts Pello::Board.new(board).as_table
+      list_names = board.lists.map(&:name)
+      input = prompt.enum_select('Choose list', list_names, per_page: 10, default: list_name)
+      Pello::List.new(board.lists.detect { |l| l.name == input })
     end
   end
 end
