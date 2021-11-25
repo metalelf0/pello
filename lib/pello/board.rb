@@ -5,7 +5,7 @@ module Pello
   class Board
     extend Forwardable
     attr_accessor :trello_board
-    def_delegators :@trello_board, :cards
+    def_delegators :@trello_board, :cards, :lists
 
     def initialize(trello_board)
       @trello_board = trello_board

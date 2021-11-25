@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'byebug'
 
 module Pello
   class Card
@@ -6,7 +7,7 @@ module Pello
 
     TITLE_REGEX = /(\(([0-9.]*)\))*\s*([0-9.]*)\s*🍅*\s*(.*)/.freeze
     attr_accessor :trello_card
-    def_delegators :@trello_card, :name, :name=, :save
+    def_delegators :@trello_card, :name, :name=, :comments, :add_comment, :save, :id
 
     def initialize(trello_card)
       @trello_card = trello_card
@@ -28,7 +29,7 @@ module Pello
       points.to_f
     end
 
-    def add_pomodori(how_many = 1)
+    def title_with_added_pomodori(how_many = 1)
       current_pomodori = extract_pomodori
       current_points = extract_points
       current_title = extract_title
@@ -37,6 +38,18 @@ module Pello
       result << "#{current_pomodori + how_many} 🍅"
       result << current_title
       result.join(' ')
+    end
+
+    def log(event)
+      comment = comments.select { |c| c.data['text'] =~ /PELLO LOG/ }.first
+      if comment
+        new_text = [comment.data['text'], event].join("\n")
+        comment.delete
+        add_comment new_text
+      else
+        text = ['~~~PELLO LOG', event].join("\n")
+        add_comment text
+      end
     end
   end
 end
