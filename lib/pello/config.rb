@@ -4,7 +4,7 @@ module Pello
     attr_accessor :user, :board_url, :list_name, :log_file
 
     def initialize
-      config = YAML.safe_load File.open(CONFIG_FILE_PATH).read
+      config         = YAML.safe_load File.open(CONFIG_FILE_PATH).read
       authentication = config['auth']
       pello_config   = config['config']
 
