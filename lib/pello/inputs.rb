@@ -2,11 +2,16 @@ require "tty-prompt"
 
 module Pello
   class Inputs
+    BACK_OPTION = '< BACK'.freeze
+
     def self.choose_board(user, board_url)
       prompt = TTY::Prompt.new
       board_names = user.boards.map(&:name)
       default_board = user.boards.select { |b| b.url == board_url }.first.try(:name)
+      board_names << BACK_OPTION
       input = prompt.enum_select('Choose board', board_names, per_page: 10, default: default_board)
+      return nil if input == BACK_OPTION
+
       Pello::Board.new(user.boards.detect { |b| b.name == input })
     end
 

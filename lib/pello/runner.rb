@@ -38,6 +38,8 @@ module Pello
 
     def add_pomodori_to_card
       board = Pello::Inputs.choose_board config.user, config.board_url
+      return unless board
+
       puts board.as_table
       continue = true
       while continue
