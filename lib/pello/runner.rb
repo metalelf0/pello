@@ -4,7 +4,7 @@ require 'tty-prompt'
 
 module Pello
   class Runner
-    attr_accessor :config, :prompt
+    attr_accessor :prompt, :board_url, :username, :log_file_path, :list_name
 
     def initialize
       @prompt = TTY::Prompt.new
@@ -35,19 +35,19 @@ module Pello
     private
 
     def file_log(text)
-      File.open(config.log_file, 'a+') do |file|
+      File.open(@log_file_path, 'a+') do |file|
         file.puts(text)
       end
     end
 
     def add_pomodori_to_card
-      board = Pello::Inputs.choose_board config.user, config.board_url
+      board = Pello::Inputs.choose_board @user, @board_url
       return unless board
 
       puts board.as_table
       continue = true
       while continue
-        list = Pello::Inputs.choose_list board, config.list_name
+        list = Pello::Inputs.choose_list board, @list_name
         return unless list
 
         card = Pello::Inputs.choose_card list
@@ -66,8 +66,8 @@ module Pello
         if prompt.yes?('Confirm?')
           card.name = card.title_with_added_pomodori(pomodori_to_add.to_i)
           card.save
-          file_log "[#{Time.now} - #{config.user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})"
-          card.log "[#{Time.now} - #{config.user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})"
+          file_log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})"
+          card.log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})"
           puts('Done!')
         else
           puts 'Ok, bye!'
@@ -81,7 +81,17 @@ module Pello
     private
 
     def configure_trello
-      @config = Pello::Config.new
+      config = Pello::Config.new
+
+      Trello.configure do |trello_config|
+        trello_config.developer_public_key = config.developer_public_key
+        trello_config.member_token = config.member_token
+      end
+
+      @user          = Trello::Member.find config.username
+      @board_url     = config.board_url
+      @list_name     = config.list_name
+      @log_file_path = config.log_file
     end
   end
 end
