@@ -44,7 +44,10 @@ module Pello
       continue = true
       while continue
         list = Pello::Inputs.choose_list board, config.list_name
+        return unless list
+
         card = Pello::Inputs.choose_card list
+        next unless card
 
         Trello::Comment.define_method :action_id do
           id
