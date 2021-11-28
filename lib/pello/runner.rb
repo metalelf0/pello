@@ -11,6 +11,25 @@ module Pello
       configure_trello
     end
 
+    def run!
+      continue = true
+
+      while continue
+        case prompt.select('Choose task') do |menu|
+          menu.choice name: 'Add pomodori', value: :add_pomodori
+          menu.choice name: 'quit', value: :quit
+        end
+        when :add_pomodori
+          add_pomodori_to_card
+        when :quit
+          puts 'Ok, bye!'
+          exit
+        end
+      end
+    end
+
+    private
+
     def file_log(text)
       File.open(config.log_file, 'a+') do |file|
         file.puts(text)
