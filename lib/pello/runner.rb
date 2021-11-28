@@ -17,10 +17,14 @@ module Pello
       while continue
         case prompt.select('Choose task') do |menu|
           menu.choice name: 'Add pomodori', value: :add_pomodori
+          menu.choice name: 'Edit config', value: :edit_config
           menu.choice name: 'quit', value: :quit
         end
         when :add_pomodori
           add_pomodori_to_card
+        when :edit_config
+          system 'mkdir -p ~/.config/pello'
+          system "#{ENV['EDITOR']} ~/.config/pello/pello.yaml"
         when :quit
           puts 'Ok, bye!'
           exit
