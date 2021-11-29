@@ -5,22 +5,7 @@ Right now, it only allows adding pomodori to a Trello card. But stay tuned.
 
 ## Installation
 
-First, run `gem install pello`.
-
-Then, create the file `~/.config/pello/pello.yaml` with the following content:
-
-```
-auth:
-  developer_public_key: ""
-  member_token: ""
-config:
-  board_url: ""
-  username: ""
-  list_name: "In progress"
-  log_file: "/Users/your_name/.pello_log"
-```
-
-Visit trello, get dev key and member token, etc.
+Run `gem install pello`.
 
 ## Usage
 

@@ -8,22 +8,22 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'A console tool to do Trello operations'
   spec.description   = 'Perform Trello operations like adding pomodori to a card title'
-  spec.homepage      = "http://somewhere.com/pello"
+  spec.homepage      = 'http://somewhere.com/pello'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 
   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = "http://somewhere.com/pello"
-  spec.metadata['changelog_uri'] = "http://somewhere.com/pello/CHANGELOG.md"
+  spec.metadata['source_code_uri'] = 'http://somewhere.com/pello'
+  spec.metadata['changelog_uri'] = 'http://somewhere.com/pello/CHANGELOG.md'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files         = Dir.glob("{bin,lib}/**/*")
+  spec.files         = Dir.glob('{bin,lib}/**/*')
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-  spec.add_runtime_dependency "tty-prompt", "~> 0"
-  spec.add_runtime_dependency "tty-table", "~> 0"
-  spec.add_runtime_dependency "ruby-trello", "~> 0"
+  spec.add_runtime_dependency 'ruby-trello', '~> 3.0'
+  spec.add_runtime_dependency 'tty-prompt', '~> 0'
+  spec.add_runtime_dependency 'tty-table', '~> 0'
 end

@@ -2,13 +2,17 @@ require 'yaml'
 require 'trello'
 require 'tty-prompt'
 
+Trello::Comment.define_method :action_id do
+  id
+end
+
 module Pello
   class Runner
-    attr_accessor :prompt, :board_url, :username, :log_file_path, :list_name
+    attr_accessor :board_url, :list_name, :log_file_path, :prompt, :username
 
     def initialize
       @prompt = TTY::Prompt.new
-      configure_trello
+      configure_pello
     end
 
     def run!
@@ -53,10 +57,6 @@ module Pello
         card = Pello::Inputs.choose_card list
         next unless card
 
-        Trello::Comment.define_method :action_id do
-          id
-        end
-
         pomodori_before = card.extract_pomodori
         pomodori_to_add = prompt.ask('Pomodori', default: 1)
 
@@ -78,20 +78,24 @@ module Pello
       end
     end
 
-    private
-
-    def configure_trello
+    def configure_pello
       config = Pello::Config.new
+      if config
+        Trello.configure do |trello_config|
+          trello_config.developer_public_key = config.developer_public_key
+          trello_config.member_token = config.member_token
+        end
 
-      Trello.configure do |trello_config|
-        trello_config.developer_public_key = config.developer_public_key
-        trello_config.member_token = config.member_token
+        @user          = Trello::Member.find config.username
+        @board_url     = config.board_url
+        @list_name     = config.list_name
+        @log_file_path = config.log_file
+      else
+        puts 'No config found, opening config file...'
+        Pello::Config.write_empty_config
+        system "#{ENV['EDITOR']} #{Pello::Config::CONFIG_FILE_PATH}"
+        exit
       end
-
-      @user          = Trello::Member.find config.username
-      @board_url     = config.board_url
-      @list_name     = config.list_name
-      @log_file_path = config.log_file
     end
   end
 end

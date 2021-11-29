@@ -6,6 +6,6 @@ gemspec
 gem 'byebug'
 gem 'rake', '~> 12.0'
 gem 'rspec', '~> 3.0'
-gem 'ruby-trello'
+gem 'ruby-trello', '~> 3.0'
 gem 'tty-prompt'
 gem 'tty-table'
