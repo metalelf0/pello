@@ -2,7 +2,7 @@ require 'yaml'
 require 'trello'
 require 'tty-prompt'
 
-Trello::Comment.define_method :action_id do
+Trello::Comment.send(:define_method, :action_id) do
   id
 end
 
