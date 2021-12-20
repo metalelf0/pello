@@ -80,7 +80,7 @@ module Pello
 
     def configure_pello
       config = Pello::Config.new
-      if config
+      if config.valid?
         Trello.configure do |trello_config|
           trello_config.developer_public_key = config.developer_public_key
           trello_config.member_token = config.member_token
