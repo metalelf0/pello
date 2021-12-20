@@ -16,11 +16,11 @@ module Pello
       cards = trello_board.lists.map { |list| list.cards.map { |card| truncate(card.name, 45) } }
 
       max_cards = cards.map(&:length).max
-      cards = cards.map { |list_cards| list_cards + [nil] * (max_cards - list_cards.length)}
+      cards = cards.map { |list_cards| list_cards + [nil] * (max_cards - list_cards.length) }
 
       tableized_cards = cards.transpose
 
-      table =  TTY::Table.new headers, tableized_cards
+      table = TTY::Table.new headers, tableized_cards
       table.render :unicode, multiline: true, resize: true, padding: [0, 0, 1, 0]
     end
 
@@ -29,13 +29,13 @@ module Pello
     def truncate(string, truncate_at, options = {})
       return string.dup unless string.length > truncate_at
 
-      omission = options[:omission] || "..."
+      omission = options[:omission] || '...'
       length_with_room_for_omission = truncate_at - omission.length
-      stop =        if options[:separator]
-          rindex(options[:separator], length_with_room_for_omission) || length_with_room_for_omission
-        else
-          length_with_room_for_omission
-        end
+      stop = if options[:separator]
+               rindex(options[:separator], length_with_room_for_omission) || length_with_room_for_omission
+             else
+               length_with_room_for_omission
+             end
 
       "#{string[0, stop]}#{omission}"
     end
