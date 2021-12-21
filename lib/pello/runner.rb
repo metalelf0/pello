@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 require 'trello'
 require 'tty-prompt'
@@ -27,8 +29,9 @@ module Pello
         when :add_pomodori
           add_pomodori_to_card
         when :edit_config
+          editor = ENV['EDITOR'] || 'vim'
           system 'mkdir -p ~/.config/pello'
-          system "#{ENV['EDITOR']} ~/.config/pello/pello.yaml"
+          system "#{editor} ~/.config/pello/pello.yaml"
         when :quit
           puts 'Ok, bye!'
           exit
