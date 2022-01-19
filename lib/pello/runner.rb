@@ -70,7 +70,7 @@ module Pello
           card.name = card.title_with_added_pomodori(pomodori_to_add.to_i)
           card.save
           file_log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})"
-          card.log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})"
+          card.log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})", @user
           puts('Done!')
         else
           puts 'Ok, bye!'
