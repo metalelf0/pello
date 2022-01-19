@@ -40,8 +40,8 @@ module Pello
       result.join(' ')
     end
 
-    def log(event)
-      comment = comments.select { |c| c.data['text'] =~ /PELLO LOG/ }.first
+    def log(event, user)
+      comment = comments.select { |c| c.creator_id == user.id && c.data['text'] =~ /PELLO LOG/ }.first
       if comment
         new_text = [comment.data['text'], event].join("\n")
         comment.delete
