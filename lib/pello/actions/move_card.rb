@@ -30,7 +30,7 @@ module Pello
           if prompt.yes?('Confirm?')
             card.list_id = target_list.id
             card.save
-            card.log "[#{Time.now} - #{user.full_name}] #{card.extract_name} (#{source_list.name} -> #{target_list.name})", user
+            card.log "[#{Time.now}] #{card.extract_name} (#{source_list.name} -> #{target_list.name})", user
             puts('Done!')
           else
             puts 'Ok, bye!'

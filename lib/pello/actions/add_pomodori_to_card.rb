@@ -31,7 +31,7 @@ module Pello
           if prompt.yes?('Confirm?')
             card.name = card.name_with_added_pomodori(pomodori_to_add.to_i)
             card.save
-            card.log "[#{Time.now} - #{user.full_name}] #{card.extract_name} (#{pomodori_before} -> #{card.extract_pomodori})", user
+            card.log "[#{Time.now}] #{card.extract_name} (#{pomodori_before} -> #{card.extract_pomodori})", user
             puts('Done!')
           else
             puts 'Ok, bye!'
