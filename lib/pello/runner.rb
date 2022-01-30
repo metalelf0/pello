@@ -41,12 +41,6 @@ module Pello
 
     private
 
-    def file_log(text)
-      File.open(@log_file_path, 'a+') do |file|
-        file.puts(text)
-      end
-    end
-
     def add_pomodori_to_card
       board = Pello::Inputs.choose_board @user, @board_url
       return unless board
@@ -69,7 +63,6 @@ module Pello
         if prompt.yes?('Confirm?')
           card.name = card.title_with_added_pomodori(pomodori_to_add.to_i)
           card.save
-          file_log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})"
           card.log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})", @user
           puts('Done!')
         else
@@ -92,7 +85,6 @@ module Pello
         @user          = Trello::Member.find config.username
         @board_url     = config.board_url
         @list_name     = config.list_name
-        @log_file_path = config.log_file
       else
         puts 'No config found, opening config file...'
         Pello::Config.write_empty_config
