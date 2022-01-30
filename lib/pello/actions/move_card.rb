@@ -3,10 +3,11 @@
 module Pello
   module Actions
     class MoveCard
-      attr_reader :prompt
+      attr_reader :prompt, :logger
 
-      def initialize(prompt)
+      def initialize(prompt, logger = Pello::CardLogger.new)
         @prompt = prompt
+        @logger = logger
       end
 
       def run(user, board_url, list_name)
@@ -30,7 +31,7 @@ module Pello
           if prompt.yes?('Confirm?')
             card.list_id = target_list.id
             card.save
-            card.log "[#{Time.now}] #{card.extract_name} (#{source_list.name} -> #{target_list.name})", user
+            logger.log user, card, "[#{Time.now}] #{card.extract_name} (#{source_list.name} -> #{target_list.name})"
             puts('Done!')
           else
             puts 'Ok, bye!'
