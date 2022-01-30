@@ -29,17 +29,6 @@ module Pello
       points.to_f
     end
 
-    def name_with_added_pomodori(how_many = 1)
-      current_pomodori = extract_pomodori
-      current_points = extract_points
-      current_name = extract_name
-      result = []
-      result << "(#{current_points})" unless current_points.zero?
-      result << "#{current_pomodori + how_many} 🍅"
-      result << current_name
-      result.join(' ')
-    end
-
     def log(event, user)
       comment = comments.select { |c| c.creator_id == user.id && c.data['text'] =~ /PELLO LOG/ }.first
       if comment

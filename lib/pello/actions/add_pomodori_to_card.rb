@@ -25,11 +25,13 @@ module Pello
           pomodori_before = card.extract_pomodori
           pomodori_to_add = prompt.ask('Pomodori', default: 1)
 
+          new_name = name_with_added_pomodori(card, pomodori_to_add.to_i)
+
           puts "Updating card #{card.name}"
-          puts "New title:    #{card.name_with_added_pomodori(pomodori_to_add.to_i)}"
+          puts "New title:    #{new_name}"
 
           if prompt.yes?('Confirm?')
-            card.name = card.name_with_added_pomodori(pomodori_to_add.to_i)
+            card.name = new_name
             card.save
             card.log "[#{Time.now}] #{card.extract_name} (#{pomodori_before} -> #{card.extract_pomodori})", user
             puts('Done!')
@@ -40,6 +42,20 @@ module Pello
 
           continue = prompt.yes?('Another one?')
         end
+      end
+
+      private
+
+      def name_with_added_pomodori(card, pomodori_to_add)
+        current_pomodori = card.extract_pomodori
+        current_points = card.extract_points
+        current_name = card.extract_name
+
+        result = []
+        result << "(#{current_points})" unless current_points.zero?
+        result << "#{current_pomodori + pomodori_to_add} 🍅"
+        result << current_name
+        result.join(' ')
       end
     end
   end
