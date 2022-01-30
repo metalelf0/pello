@@ -1,7 +1,7 @@
 module Pello
   class Config
     CONFIG_FILE_PATH = "#{ENV['HOME']}/.config/pello/pello.yaml".freeze
-    attr_accessor :board_url, :developer_public_key, :list_name, :log_file, :member_token, :username, :error
+    attr_accessor :board_url, :developer_public_key, :list_name, :member_token, :username, :error
 
     def initialize
       if File.exist?(CONFIG_FILE_PATH)
@@ -15,7 +15,6 @@ module Pello
         @username             = pello_config['username']
         @board_url            = pello_config['board_url']
         @list_name            = pello_config['list_name']
-        @log_file             = pello_config['log_file']
         @error                = false
       else
         @error = true
@@ -39,7 +38,6 @@ module Pello
         file.puts '  board_url: ""'
         file.puts '  username: ""'
         file.puts '  list_name: "In progress"'
-        file.puts '  log_file: "/Users/your_name/.pello_log"'
       end
     end
   end
