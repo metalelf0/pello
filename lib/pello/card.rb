@@ -7,7 +7,7 @@ module Pello
 
     NAME_REGEX = /(\(([0-9.]*)\))*\s*([0-9.]*)\s*🍅*\s*(.*)/.freeze
     attr_accessor :trello_card
-    def_delegators :@trello_card, :name, :name=, :comments, :add_comment, :save, :id
+    def_delegators :@trello_card, :name, :name=, :comments, :add_comment, :save, :id, :list_id, :list_id=
 
     def initialize(trello_card)
       @trello_card = trello_card

@@ -23,11 +23,14 @@ module Pello
       while continue
         case prompt.select('Choose task') do |menu|
           menu.choice name: 'Add pomodori', value: :add_pomodori
+          menu.choice name: 'Move card', value: :move_card
           menu.choice name: 'Edit config', value: :edit_config
           menu.choice name: 'quit', value: :quit
         end
         when :add_pomodori
           add_pomodori_to_card
+        when :move_card
+          move_card
         when :edit_config
           editor = ENV['EDITOR'] || 'vim'
           system 'mkdir -p ~/.config/pello'
@@ -43,6 +46,10 @@ module Pello
 
     def add_pomodori_to_card
       Pello::Actions::AddPomodoriToCard.new(prompt).run(@user, board_url, list_name)
+    end
+
+    def move_card
+      Pello::Actions::MoveCard.new(prompt).run(@user, board_url, list_name)
     end
 
     def configure_pello
