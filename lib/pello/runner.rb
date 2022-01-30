@@ -58,12 +58,12 @@ module Pello
         pomodori_to_add = prompt.ask('Pomodori', default: 1)
 
         puts "Updating card #{card.name}"
-        puts "New title:    #{card.title_with_added_pomodori(pomodori_to_add.to_i)}"
+        puts "New title:    #{card.name_with_added_pomodori(pomodori_to_add.to_i)}"
 
         if prompt.yes?('Confirm?')
-          card.name = card.title_with_added_pomodori(pomodori_to_add.to_i)
+          card.name = card.name_with_added_pomodori(pomodori_to_add.to_i)
           card.save
-          card.log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})", @user
+          card.log "[#{Time.now} - #{@user.full_name}] #{card.extract_name} (#{pomodori_before} -> #{card.extract_pomodori})", @user
           puts('Done!')
         else
           puts 'Ok, bye!'

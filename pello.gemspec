@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['metalelf0@gmail.com']
 
   spec.summary       = 'A console tool to do Trello operations'
-  spec.description   = 'Perform Trello operations like adding pomodori to a card title'
+  spec.description   = 'Perform Trello operations like adding pomodori to a card name'
   spec.homepage      = 'https://github.com/metalelf0/pello'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
