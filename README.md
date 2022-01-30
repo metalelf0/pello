@@ -1,7 +1,7 @@
 # Pello
 
 Pello is a command line utility to perform Trello related tasks directly from your console.
-Right now, it only allows adding pomodori to a Trello card. But stay tuned.
+Right now, it allows adding pomodori to a Trello card and moving cards from one list to another. But stay tuned.
 
 ## Installation
 

@@ -23,11 +23,14 @@ module Pello
       while continue
         case prompt.select('Choose task') do |menu|
           menu.choice name: 'Add pomodori', value: :add_pomodori
+          menu.choice name: 'Move card', value: :move_card
           menu.choice name: 'Edit config', value: :edit_config
           menu.choice name: 'quit', value: :quit
         end
         when :add_pomodori
           add_pomodori_to_card
+        when :move_card
+          move_card
         when :edit_config
           editor = ENV['EDITOR'] || 'vim'
           system 'mkdir -p ~/.config/pello'
@@ -41,44 +44,12 @@ module Pello
 
     private
 
-    def file_log(text)
-      File.open(@log_file_path, 'a+') do |file|
-        file.puts(text)
-      end
+    def add_pomodori_to_card
+      Pello::Actions::AddPomodoriToCard.new(prompt).run(@user, board_url, list_name)
     end
 
-    def add_pomodori_to_card
-      board = Pello::Inputs.choose_board @user, @board_url
-      return unless board
-
-      puts board.as_table
-      continue = true
-      while continue
-        list = Pello::Inputs.choose_list board, @list_name
-        return unless list
-
-        card = Pello::Inputs.choose_card list
-        next unless card
-
-        pomodori_before = card.extract_pomodori
-        pomodori_to_add = prompt.ask('Pomodori', default: 1)
-
-        puts "Updating card #{card.name}"
-        puts "New title:    #{card.title_with_added_pomodori(pomodori_to_add.to_i)}"
-
-        if prompt.yes?('Confirm?')
-          card.name = card.title_with_added_pomodori(pomodori_to_add.to_i)
-          card.save
-          file_log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})"
-          card.log "[#{Time.now} - #{@user.full_name}] #{card.extract_title} (#{pomodori_before} -> #{card.extract_pomodori})", @user
-          puts('Done!')
-        else
-          puts 'Ok, bye!'
-          nil
-        end
-
-        continue = prompt.yes?('Another one?')
-      end
+    def move_card
+      Pello::Actions::MoveCard.new(prompt).run(@user, board_url, list_name)
     end
 
     def configure_pello
@@ -92,7 +63,6 @@ module Pello
         @user          = Trello::Member.find config.username
         @board_url     = config.board_url
         @list_name     = config.list_name
-        @log_file_path = config.log_file
       else
         puts 'No config found, opening config file...'
         Pello::Config.write_empty_config

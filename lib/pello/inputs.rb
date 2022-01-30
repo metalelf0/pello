@@ -15,12 +15,12 @@ module Pello
       Pello::Board.new(user.boards.detect { |b| b.name == input })
     end
 
-    def self.choose_list(board, list_name)
+    def self.choose_list(board, list_name, prompt_text = 'Choose list')
       prompt = TTY::Prompt.new
       list_names = board.lists.map(&:name)
       list_names << BACK_OPTION
       default_list = board.lists.select { |l| l.name == list_name }.first.try(:name)
-      input = prompt.select('Choose list', list_names, per_page: 15, default: default_list)
+      input = prompt.select(prompt_text, list_names, per_page: 15, default: default_list)
       return nil if input == BACK_OPTION
 
       Pello::List.new(board.lists.detect { |l| l.name == input })
