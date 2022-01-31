@@ -3,10 +3,11 @@
 module Pello
   module Actions
     class AddPomodoriToCard
-      attr_reader :prompt
+      attr_reader :prompt, :logger
 
-      def initialize(prompt)
+      def initialize(prompt, logger = Pello::CardLogger.new)
         @prompt = prompt
+        @logger = logger
       end
 
       def run(user, board_url, list_name)
@@ -33,7 +34,7 @@ module Pello
           if prompt.yes?('Confirm?')
             card.name = new_name
             card.save
-            card.log "[#{Time.now}] #{card.extract_name} (#{pomodori_before} -> #{card.extract_pomodori})", user
+            logger.log user, card, "[#{Time.now}] #{card.extract_name} (#{pomodori_before} -> #{card.extract_pomodori})"
             puts('Done!')
           else
             puts 'Ok, bye!'

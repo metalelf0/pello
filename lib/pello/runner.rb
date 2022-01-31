@@ -24,6 +24,7 @@ module Pello
         case prompt.select('Choose task') do |menu|
           menu.choice name: 'Add pomodori', value: :add_pomodori
           menu.choice name: 'Move card', value: :move_card
+          menu.choice name: 'Print board pomodori report', value: :report
           menu.choice name: 'Edit config', value: :edit_config
           menu.choice name: 'quit', value: :quit
         end
@@ -31,6 +32,8 @@ module Pello
           add_pomodori_to_card
         when :move_card
           move_card
+        when :report
+          report
         when :edit_config
           editor = ENV['EDITOR'] || 'vim'
           system 'mkdir -p ~/.config/pello'
@@ -50,6 +53,10 @@ module Pello
 
     def move_card
       Pello::Actions::MoveCard.new(prompt).run(@user, board_url, list_name)
+    end
+
+    def report
+      Pello::Actions::Report.new.run(@user, board_url)
     end
 
     def configure_pello
