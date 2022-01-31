@@ -1,5 +1,9 @@
 # Pello gem changelog
 
+## 0.4
+
+* allow generating a pomodori count report for a given board
+
 ## 0.3
 
 * allow moving cards from one list to another
