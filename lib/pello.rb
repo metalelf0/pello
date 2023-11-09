@@ -7,6 +7,7 @@ require 'pello/card'
 require 'pello/card_logger'
 require 'pello/actions/add_pomodori_to_card'
 require 'pello/actions/move_card'
+require 'pello/actions/daily_log'
 require 'pello/actions/report'
 require 'pello/config'
 

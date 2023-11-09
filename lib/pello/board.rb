@@ -1,5 +1,6 @@
 require 'forwardable'
 require 'tty/table'
+require 'yaml'
 
 module Pello
   class Board
@@ -19,6 +20,8 @@ module Pello
       cards = cards.map { |list_cards| list_cards + [nil] * (max_cards - list_cards.length) }
 
       tableized_cards = cards.transpose
+
+      puts tableized_cards.to_yaml
 
       table = TTY::Table.new headers, tableized_cards
       table.render :unicode, multiline: true, resize: true, padding: [0, 0, 1, 0]
